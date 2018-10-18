@@ -211,6 +211,19 @@ public class AArch64ArithmeticLIRGenerator extends ArithmeticLIRGenerator implem
         return result;
     }
 
+    public Value emitMultiplyAddSub(AArch64ArithmeticOp op, Value a, Value b, Value c) {
+        assert isNumericInteger(a.getPlatformKind());
+        assert isNumericInteger(b.getPlatformKind());
+        assert isNumericInteger(c.getPlatformKind());
+
+        Variable result = getLIRGen().newVariable(LIRKind.combine(a, b, c));
+        AllocatableValue x = moveSp(asAllocatable(a));
+        AllocatableValue y = moveSp(asAllocatable(b));
+        AllocatableValue z = moveSp(asAllocatable(c));
+        getLIRGen().append(new AArch64ArithmeticOp.MultiplyAddSubOp(op, result, x, y, z));
+        return result;
+    }
+
     private static PlatformKind getFloatConvertResultKind(FloatConvert op) {
         switch (op) {
             case F2I:
