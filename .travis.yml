@@ -9,6 +9,10 @@ addons:
       - wget
       - mercurial
 
+arch:
+  - amd64
+  - arm64
+
 # Use Trusty to get enough RAM
 sudo: required
 dist: trusty
@@ -46,6 +50,15 @@ matrix:
   - env: JDK="jdk11" GATE="style,fullbuild" PRIMARY="compiler"
   - env: JDK="jdk11" GATE="build,test" PRIMARY="compiler"
   - env: JDK="jdk11" GATE="build,bootstraplite" PRIMARY="compiler"
+#  - os: linux
+#    arch: arm64
+#    env: JDK="jdk11" GATE="fullbuild,test,helloworld" PRIMARY="substratevm"
+  - os: linux
+    arch: arm64
+    env: JDK="jdk11" GATE="fullbuild,test" PRIMARY="compiler"
+  - os: linux
+    arch: arm64
+    env: JDK="jdk11" GATE="build,bootstraplite" PRIMARY="compiler"
 # GR-16977
 #  - env: JDK="jdk11" GATE="build,test,helloworld" PRIMARY="substratevm"
 
